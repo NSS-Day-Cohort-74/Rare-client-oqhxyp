@@ -17,13 +17,21 @@ export const Login = ({ setToken }) => {
     }
 
     loginUser(user).then(res => {
-      if ("valid" in res && res.valid) {
-        setToken(res.token)
+      // First solution: Check if res is a string, parse it if needed
+      const response = typeof res === 'string' ? JSON.parse(res) : res
+      
+      // Alternative solution: Use optional chaining to safely access properties
+      if (response?.valid) {
+        setToken(response.token)
         navigate("/")
       }
       else {
         setisUnsuccessful(true)
       }
+    })
+    .catch(error => {
+      console.error("Login error:", error)
+      setisUnsuccessful(true)
     })
   }
 
