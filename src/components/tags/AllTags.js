@@ -4,17 +4,19 @@ import { CreateTag } from "./CreateTag.js"
 
 export const AllTags = () => {
   const [allTags, setAllTags] = useState([])
-  
+  const [refreshedTags, setRefreshedTags] = useState(false)
 
-  const fillAllTags = () => {
+  // const fillAllTags = () => {
+  //   pass
+  // }
+  
+  useEffect(() => {
     getAllTags()
     .then((data) => setAllTags(data))
     console.log(allTags)
-  }
-
-  useEffect(() => {
-    fillAllTags()
-  },[])
+    
+    
+  },[refreshedTags])
 
     return (
         <>
@@ -24,7 +26,7 @@ export const AllTags = () => {
             <div key={t.id}> {t.label} </div>
           ))}
 
-          <div> {<CreateTag/>} </div>
+          <div> {<CreateTag setRefreshedTags={setRefreshedTags} refreshedTags={refreshedTags}/>} </div>
         </>
     );
   };

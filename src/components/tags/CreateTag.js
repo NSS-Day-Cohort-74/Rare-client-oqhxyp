@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { postTag } from "../../services/tagsService.js"
 
-export const CreateTag = () => {
+export const CreateTag = ({setRefreshedTags, refreshedTags}) => {
     const tagInput = useRef()
 
     const handleCreateTag = (event) => {
@@ -10,6 +10,14 @@ export const CreateTag = () => {
             label: tagInput.current.value
         }
         postTag(tag)
+        if(refreshedTags) {
+
+            setRefreshedTags(false)
+        } else {
+            setRefreshedTags(true)
+            
+        }
+
         console.log(tag)
         console.log(tagInput)
     }
