@@ -29,9 +29,7 @@ export const Register = ({setToken}) => {
 
       registerUser(newUser)
         .then(res => {
-          console.log(res)
           const response = typeof res === 'string' ? JSON.parse(res) : res
-          console.log(response)
           if (response?.valid) {
             setToken(response.token)
             navigate("/")
@@ -40,7 +38,7 @@ export const Register = ({setToken}) => {
     } else {
       passwordDialog.current.showModal()
     }
-  }
+  } 
 
   return (
     <section className="columns is-centered">
