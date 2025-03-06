@@ -45,6 +45,4 @@ export const PostDetails = ({token}) => {
         </section>
       </section>
     </>
-  
-
   }}
