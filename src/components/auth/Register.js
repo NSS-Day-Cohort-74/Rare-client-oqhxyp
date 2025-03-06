@@ -29,10 +29,11 @@ export const Register = ({setToken}) => {
 
       registerUser(newUser)
         .then(res => {
+          console.log(res)
           const response = typeof res === 'string' ? JSON.parse(res) : res
           console.log(response)
           if (response?.valid) {
-            setToken(res.token)
+            setToken(response.token)
             navigate("/")
           }
         })
