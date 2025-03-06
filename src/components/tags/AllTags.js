@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAllTags } from "../../services/tagsService";
+import { CreateTag } from "./CreateTag.js"
 
 export const AllTags = () => {
   const [allTags, setAllTags] = useState([])
+  
 
   const fillAllTags = () => {
     getAllTags()
@@ -21,6 +23,8 @@ export const AllTags = () => {
           {allTags.map(t => ( 
             <div key={t.id}> {t.label} </div>
           ))}
+
+          <div> {<CreateTag/>} </div>
         </>
     );
   };
