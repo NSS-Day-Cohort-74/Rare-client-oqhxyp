@@ -11,7 +11,7 @@ export const postTag = (tag) => {
         },
         body: JSON.stringify(tag)
     }
-    console.log(tag)
+    
     fetch("http://localhost:8088/tags", post)
     
 }
