@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPostById } from "../../services/postServices";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPostById } from "../../services/postServices";
