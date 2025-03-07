@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { getTags } from "../../services/tagServices";
+import { createTagInPost, getTags } from "../../services/tagServices";
 import { createNewPost } from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
-import { HumanDate } from "../utils/HumanDate";
 import { useNavigate } from "react-router-dom";
 
 export const NewPost = ({token}) => {
     const title=useRef()
     const imageUrl=useRef()
     const content=useRef()
-    const [selectedCategory, setSelectedCategory] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState({})
     const [selectedTags, setSelectedTags] = useState([])
     const [categories, setCategories]=useState([])
     const [tags, setTags]=useState([])
@@ -25,18 +24,18 @@ export const NewPost = ({token}) => {
     },[])
 
     const handleTagsChange = (e) => {
-      const foundTag = selectedTags.find(selectedTags => {
-          return selectedTags.id === Number(e.target.id)
+      const foundTag = selectedTags.find(selectedTag => {
+        return selectedTag.tag_id === Number(e.target.id)
       })
       if(foundTag){
-        console.log(foundTag)
-        const newCurrentTags = selectedTags.filter(selectedTag => {
+        console.log("Found Tags:" + foundTag)
+        const newCurrentTag = selectedTags.filter(selectedTag => {
           return selectedTag.id !== foundTag.id
         })
-        setSelectedTags(newCurrentTags)
+        setSelectedTags(newCurrentTag)
       }else{
         const newTag = {
-          tagId:Number(e.target.id)
+          tag_id:Number(e.target.id)
         }
         const addedTags = [...selectedTags, newTag]
         setSelectedTags(addedTags)
@@ -45,33 +44,27 @@ export const NewPost = ({token}) => {
 
     const handleSavePost=async(event)=>{
         event.preventDefault()
-
-        const date= new Date()
-        const editedDate=HumanDate(date)
         
         const createdPost={
           user_id: token,
           category_id: selectedCategory,
           title: title.current.value,
-          publication_date: editedDate,
+          publication_date: new Date(),
           image_url: imageUrl.current.value,
           content: content.current.value,
           approved: 1
     }
-    console.log(date)
+    console.log(createdPost)
     const NewPost=await createNewPost(createdPost)
+    console.log(NewPost)
     if (selectedTags.length > 0 && NewPost.id){
-      const tagsInPostArray = selectedCategory.map((tag) =>({
+      const tagsInPostArray = selectedTags.map((tag) =>({
         post_id: NewPost.id,
-        tag_id: tag.tagId,
+        tag_id: tag.tag_id,
       }))
       await createTagInPost(tagsInPostArray)
     }
-    
-  
   }
-    
-  console.log(selectedTags)
     return (
         <section className="columns is-centered">
           <form className="column is-two-thirds" onSubmit={handleSavePost}>
