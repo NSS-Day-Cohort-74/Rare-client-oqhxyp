@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getCategories } from "../../services/categoriesService";
+import { CreateCategory } from "./CreateCategory";
 
 export const AllCategories = () => {
   const [allCategories, setAllCategories] = useState([]);
+  const [refreshedCats, setRefreshedCats] = useState(false)
 
   const fetchAllCategories = async () => {
     try {
@@ -15,7 +17,7 @@ export const AllCategories = () => {
 
   useEffect(() => {
     fetchAllCategories();
-  }, []);
+  }, [refreshedCats]);
 
   return (
     <div className="all-categories-container">
@@ -38,6 +40,7 @@ export const AllCategories = () => {
           ))}
         </ul>
       )}
+     <div> {<CreateCategory setRefreshedCats={setRefreshedCats} refreshedCats={refreshedCats}/>} </div>
     </div>
   );
 };

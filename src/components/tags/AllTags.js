@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getAllTags } from "../../services/tagsService";
+import { getAllTags } from "../../services/tagServices";
 import { CreateTag } from "./CreateTag.js"
 
 export const AllTags = () => {

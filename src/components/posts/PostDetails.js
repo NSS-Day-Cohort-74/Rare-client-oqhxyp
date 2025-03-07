@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPostById } from "../../services/postServices";
+import { HumanDate } from "../utils/HumanDate";
 
 export const PostDetails = ({token}) => {
   const [post, setPost] = useState()
@@ -16,8 +18,6 @@ export const PostDetails = ({token}) => {
   useEffect(() => {
     fetchAndSetPostData()
   },[])
-  
-  console.log(post)
 
   if(postId && post){
     return <>
@@ -34,7 +34,7 @@ export const PostDetails = ({token}) => {
         <img src={post.image_url} alt="description here"></img>
         <section>
           <div>
-            Published on {post.publication_date} by {post.user.first_name} {post.user.last_name}
+             Published on {post.publication_date} by {post.user.first_name} {post.user.last_name}
           </div>
           <div>
             <button>View Comments</button>
@@ -45,4 +45,6 @@ export const PostDetails = ({token}) => {
         </section>
       </section>
     </>
+  
+
   }}

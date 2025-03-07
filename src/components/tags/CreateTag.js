@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { postTag } from "../../services/tagsService.js"
+import { postTag } from "../../services/tagServices.js"
 
 export const CreateTag = ({setRefreshedTags, refreshedTags}) => {
     const tagInput = useRef()
