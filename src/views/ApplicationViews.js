@@ -23,7 +23,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             </Route>
             <Route path="myPosts" element={<UserPosts token={token}/>}/>
             <Route path="categoryManager" element={<AllCategories token={token}/>}/>
-            <Route path="tagManager" element={<AllTags token={token}/>}/> 
+            <Route path="tags" element={<AllTags token={token}/>}/> 
        
       </Route>
     </Routes>
