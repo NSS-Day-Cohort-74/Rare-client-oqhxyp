@@ -16,8 +16,6 @@ export const PostDetails = ({token}) => {
   useEffect(() => {
     fetchAndSetPostData()
   },[])
-  
-  console.log(post)
 
   if(postId && post){
     return <>

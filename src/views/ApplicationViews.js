@@ -8,6 +8,7 @@ import { AllCategories } from "../components/categories/AllCategories.js"
 import { AllTags } from "../components/tags/AllTags.js"
 import { PostDetails } from "../components/posts/PostDetails.js"
 import { FavoritePosts } from "../components/posts/FavoritePosts.js"
+import { NewPost } from "../components/posts/CreatePost.js"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -21,6 +22,7 @@ export const ApplicationViews = ({ token, setToken }) => {
               <Route index element={<AllPosts token={token}/>}/>
               <Route path=":postId" element={<PostDetails token={token}/>}/>
             </Route>
+            <Route path="newPost" element={<NewPost token={token}/>}/>
             <Route path="myPosts" element={<UserPosts token={token}/>}/>
             <Route path="categoryManager" element={<AllCategories token={token}/>}/>
             <Route path="tagManager" element={<AllTags token={token}/>}/> 

@@ -17,21 +17,3 @@ export const createTagInPost = async (array) =>{
     });
   }
 };
-
-/*def create_posttag(posttag_data):
-    with sqlite3.connect("./db.sqlite3") as conn:
-        conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor()
-
-        db_cursor.execute("""
-        INSERT INTO PostTags (post_id, tag_id)
-            VALUES (?, ?)
-        """,
-        (posttag_data["post_id"],posttag_data["tag_id"]),)
-        return {"message": "created post tags successfully!"}
-
-        elif url["requested_resource"] == "posttags":
-          response_body = create_posttag(data)
-          if response_body:                                   
-            return self.response(json.dumps(response_body), status.HTTP_201_SUCCESS_CREATED.value)
-          return self.response("Resource not found", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value) */
