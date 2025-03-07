@@ -3,3 +3,15 @@ export const getCategories = async () => {
       res.json()
     )
   }
+  export const postCategory = (cat) => {
+    const post = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cat)
+    }
+    
+    fetch("http://localhost:8088/categories", post)
+    
+}

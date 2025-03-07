@@ -10,7 +10,6 @@ export const AllPosts = () => {
     const fetchAllPosts = async () => {
         try {
           const postArray = await getPosts();
-          console.log("j", postArray)
         setAllPosts(postArray);
           } catch (error) {
           console.error("Error fetching allPosts:", error);
@@ -34,7 +33,7 @@ return (
                 <ul className="posts-list">
                     {allPosts.map((post) => (
                         <li key={post.id}>
-                            <Link to={`/PostsDetails/${post.id}`}>
+                            <Link to={`/allPosts/${post.id}`}>
                                 {post.title}
                             </Link>
                             <div className="card-info">
