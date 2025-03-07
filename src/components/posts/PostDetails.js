@@ -18,8 +18,6 @@ export const PostDetails = ({token}) => {
   useEffect(() => {
     fetchAndSetPostData()
   },[])
-  
-  let niceDate = HumanDate(post.publication_date)
 
   if(postId && post){
     return <>
