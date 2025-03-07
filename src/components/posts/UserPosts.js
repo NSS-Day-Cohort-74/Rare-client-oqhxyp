@@ -41,7 +41,7 @@ export const UserPosts = ({token}) => {
                       <ul className="posts-list">
                           {myPosts.map((post) => (
                               <li key={post.id}>
-                                  <Link to={`/PostsDetails/${post.id}`}>
+                                  <Link to={`/allPosts/${post.id}`}>
                                       {post.title}
                                   </Link>
                                   <div className="card-info">

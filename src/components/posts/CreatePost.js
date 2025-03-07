@@ -63,7 +63,7 @@ export const NewPost = ({token}) => {
         tag_id: tag.tag_id,
       }))
       await createTagInPost(tagsInPostArray)
-    }
+    }navigate(`/myPosts`)
   }
     return (
         <section className="columns is-centered">
@@ -88,6 +88,7 @@ export const NewPost = ({token}) => {
               <label className="label">Category</label>
               <div className="control">
                 <select className="input" onChange={(e) => setSelectedCategory(e.target.value)}>
+                    <option value="Select Category">Select Category</option>
                     {categories.map(category => (
                       <option value={category.id} key={category.id}>
                         {category.label}
