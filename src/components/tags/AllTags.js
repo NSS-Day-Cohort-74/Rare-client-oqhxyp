@@ -16,14 +16,17 @@ export const AllTags = () => {
     console.log(allTags)
     
     
-  },[refreshedTags])
+  },[refreshedTags, allTags.length])
 
     return (
         <>
 
       <div>AllTags</div>
-          {allTags.map(t => ( 
+          {allTags.map(t => ( <>
             <div key={t.id}> {t.label} </div>
+            <button>edit</button>
+            <button>delete</button>
+          </>
           ))}
 
           <div> {<CreateTag setRefreshedTags={setRefreshedTags} refreshedTags={refreshedTags}/>} </div>

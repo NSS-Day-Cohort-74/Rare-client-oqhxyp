@@ -25,6 +25,7 @@ export const CreateTag = ({setRefreshedTags, refreshedTags}) => {
         <>
         <form onSubmit={handleCreateTag}>
             <input ref={tagInput} placeholder="Enter Tag Name"></input>
+            
             <button type="submit"> Create Tag</button>
         </form>
         </>
