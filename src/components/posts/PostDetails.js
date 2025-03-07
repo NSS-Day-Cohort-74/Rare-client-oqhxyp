@@ -34,7 +34,7 @@ export const PostDetails = ({token}) => {
         <img src={post.image_url} alt="description here"></img>
         <section>
           <div>
-            Published on {niceDate} by {post.user.first_name} {post.user.last_name}
+             Published on {post.publication_date} by {post.user.first_name} {post.user.last_name}
           </div>
           <div>
             <button>View Comments</button>
