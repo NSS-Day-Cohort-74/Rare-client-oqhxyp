@@ -34,7 +34,7 @@ return (
                 <ul className="posts-list">
                     {allPosts.map((post) => (
                         <li key={post.id}>
-                            <Link to={`/PostsDetails/${post.id}`}>
+                            <Link to={`/allPosts/${post.id}`}>
                                 {post.title}
                             </Link>
                             <div className="card-info">
