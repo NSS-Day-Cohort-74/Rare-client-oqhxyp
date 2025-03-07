@@ -10,7 +10,6 @@ export const AllPosts = () => {
     const fetchAllPosts = async () => {
         try {
           const postArray = await getPosts();
-          console.log("j", postArray)
         setAllPosts(postArray);
           } catch (error) {
           console.error("Error fetching allPosts:", error);
