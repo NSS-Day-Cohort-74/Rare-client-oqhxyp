@@ -32,6 +32,8 @@ export const UserPosts = ({token}) => {
   
       return (
           <>
+          
+
               <div className="all-post-container">
                   <h2>All Posts</h2>
                   
@@ -47,7 +49,7 @@ export const UserPosts = ({token}) => {
                                   <div className="card-info">
                                   <p>{post.content}</p>
                                   <p>{post.publication_date}</p>
-                                  {/* <p>{post.categories.label}</p> */}
+                                  <p>{post.categories.label}</p>
                                   <p>{post.user.first_name}</p>
                                   <p>{post.user.last_name}</p>
                                   </div>
