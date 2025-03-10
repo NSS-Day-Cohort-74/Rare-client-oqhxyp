@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { getPosts} from "../../services/postServices";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const UserPosts = ({token}) => {
-
+  const navigate = useNavigate();
   const [allPosts, setPosts] = useState([])
   const [myPosts, setMyPosts] = useState([])
   const [refreshedPosts, setRefreshedPosts] = useState(false)
@@ -28,7 +28,9 @@ export const UserPosts = ({token}) => {
 
     },[allPosts, token])
 
-
+    const handleEdit = (postId) => {
+        navigate(`/myPosts/${postId}`)
+    }
   
       return (
           <>
@@ -52,7 +54,7 @@ export const UserPosts = ({token}) => {
                                   <p>{post.user.last_name}</p>
                                   </div>
                                   <button>delete</button>
-                                  <button>edit</button>
+                                  <button onClick={() => handleEdit(post.id)}>edit</button>
                               </li>
                           ))}
                       </ul>

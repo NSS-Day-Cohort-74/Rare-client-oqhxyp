@@ -33,6 +33,6 @@ export const updatePost = async (postId, updatedData) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    return response.json();
+    // return response.json();
   };
 
