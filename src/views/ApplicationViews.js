@@ -9,6 +9,8 @@ import { AllTags } from "../components/tags/AllTags.js"
 import { PostDetails } from "../components/posts/PostDetails.js"
 import { FavoritePosts } from "../components/posts/FavoritePosts.js"
 import { NewPost } from "../components/posts/CreatePost.js"
+import { AllUsers } from "../components/users/AllUsers.js"
+import { UserDetails } from "../components/users/UserDetails.js"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -26,7 +28,10 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path="myPosts" element={<UserPosts token={token}/>}/>
             <Route path="categoryManager" element={<AllCategories token={token}/>}/>
             <Route path="tags" element={<AllTags token={token}/>}/> 
-       
+            <Route path="users">
+              <Route index element= {<AllUsers token={token}/>}/>
+              <Route path=":userId" element={<UserDetails token={token}/>}/>
+            </Route> 
       </Route>
     </Routes>
   </>
