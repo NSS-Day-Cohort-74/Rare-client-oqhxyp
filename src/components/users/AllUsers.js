@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { getUsers } from "../../services/userServices"
 import { Link } from "react-router-dom"
 
-
 export const AllUsers = ({token}) => {
     const [allUsers, setAllUsers] = useState()
 
@@ -18,41 +17,47 @@ export const AllUsers = ({token}) => {
 
     if(allUsers){
         return <>
-        <h1>Users</h1>
-        <section>
-            <div>
-                Username
-            </div>
-            <div>
-                First Name
-            </div>
-            <div>
-                Last Name
-            </div>
-            <div>
-                Email
-            </div>
-        </section>
-        <section>
-            {allUsers.map(user => {
-                return <>
-                    <div key={user.id}>
-                        <Link to={`/users/${user.id}`}>
-                            {user.username}
-                        </Link>
+            <section className="section">
+                <div className="container">
+                    <h1 className="title has-text-centered mb-6">Users</h1>
+                    
+                    <div className="table-container">
+                        <table className="table is-fullwidth is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Username</th> 
+                                    <th>First Name</th> 
+                                    <th>Last Name</th> 
+                                    <th>Email</th> 
+                                    <th>Is Admin</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {allUsers.map(user => (
+                                    <tr key={user.id}>
+                                        <td>
+                                            <Link to={`/users/${user.id}`}>
+                                                {user.username}
+                                            </Link>
+                                        </td>
+                                        <td>{user.first_name}</td>
+                                        <td>{user.last_name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.is_admin ? "Yes" : "No"}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                    <div>
-                        {user.first_name}
-                    </div>
-                    <div>
-                        {user.last_name}
-                    </div>
-                    <div>
-                        {user.email}
-                    </div>
-                </>
-            })}  
-        </section>
-    </>
+                </div>
+            </section>
+        </>
     }
+    
+    return <div className="section">
+        <div className="container">
+            <p className="has-text-centered">Loading users...</p>
+        </div>
+    </div>
 }
