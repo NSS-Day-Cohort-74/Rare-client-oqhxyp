@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { deletePost, getPosts} from "../../services/postServices";
+import { deletePostTags } from "../../services/tagServices";
 
 
 
@@ -35,7 +36,7 @@ export const UserPosts = ({token}) => {
         const userConfirmed=window.confirm("Are you sure you want to delete this post?");
         if (userConfirmed){
             deletePost(postId)
-            //.then(()=>deletePostTags(postId))
+            .then(()=>deletePostTags(postId))
             .then(()=>{window.location.reload() 
             //or getPosts(token).then((data) => {
           //setPosts(data);  // Update all posts
