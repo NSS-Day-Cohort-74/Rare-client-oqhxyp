@@ -17,3 +17,7 @@ export const deleteSubscription = (subscriptionId) => {
         method: "DELETE"
     }).then(res => res.json())
 }
+
+export const getSubscriptionPosts = (follower_id) => {
+    return fetch(`http://localhost:8088/favoriteSubscriptions?follower_id=${follower_id}`).then(res => res.json())
+}
