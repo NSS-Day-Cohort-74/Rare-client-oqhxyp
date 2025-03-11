@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { deleteComment, getComments } from "../../services/commentServices";
@@ -9,10 +7,8 @@ export const PostComments = ({token}) => {
 
   const [allComments, setComments] = useState([])
   const [PostComments, setPostComments] = useState([])
-  const [refreshedComments, setRefreshedComments] = useState(false)
   
   const{postId}=useParams()
-  console.log(postId)
     
     useEffect(() => {
       getComments()
@@ -45,37 +41,61 @@ export const PostComments = ({token}) => {
      const postTitle=PostComments.length>0?PostComments[0].post.title:null
 
 
-      return (
-          <>
-              <div className="all-post-container">
-                  <h2>{postTitle} Comments</h2>
-
-                  <div>
-                  <Link to={`/allPosts/${postId}/newComment`}><button>Add Comment</button></Link>
-                  </div>
-                  
-                  {PostComments.length === 0 ? (
-                      <p>No comments found.</p>
-                  ) : (
-                      <ul className="comment-list">
-                          {PostComments.map((comment) => (
-                              <li key={comment.id}>
-                                  <div className="card-info">
-                                  <p>{comment.content}</p>
-                                  <p>-{comment.author.username}</p>
-                                  </div>
-                                  
-                                 {comment.author_id===Number(token) &&(
-                                    <>
-                                    <button className="btn-warning" onClick={()=>confirmDeletion(comment.id)}>🚮</button>
-                                    <button>edit</button>
-                                    </>)
-                                    }
-                              </li>
-                          ))}
-                      </ul>
-                  )}
+     return (
+        <div className="container">
+          <div className="section">
+            <div className="has-text-centered mb-5">
+              <h2 className="title is-3">{postTitle ? `${postTitle} Comments` : 'Comments'}</h2>
+              
+              <div className="mt-4 mb-5">
+                <Link to={`/allPosts/${postId}/newComment`} className="button is-primary is-medium">
+                  Add Comment
+                </Link>
               </div>
-          </>
+            </div>
+            
+            {PostComments.length === 0 ? (
+              <div className="notification is-light has-text-centered">
+                <p className="is-size-5">No comments found.</p>
+              </div>
+            ) : (
+              <div className="columns is-multiline is-centered">
+                {PostComments.map((comment) => (
+                  <div key={comment.id} className="column is-5 mb-4">
+                    <div className="card">
+                      <div className="card-content">
+                        <div className="content">
+                          <p>{comment.content}</p>
+                          <p className="has-text-right has-text-weight-bold">
+                            - {comment.author.username}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {comment.author_id === Number(token) && (
+                        <div className="card-footer">
+                          <div className="card-footer-item">
+                            <div className="buttons">
+                              <button className="button is-warning">
+                                Edit
+                              </button>
+                              <button 
+                                className="button is-danger" 
+                                onClick={() => confirmDeletion(comment.id)}
+                              >
+                                Delete
+                              </button>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       );
-  };
+    };

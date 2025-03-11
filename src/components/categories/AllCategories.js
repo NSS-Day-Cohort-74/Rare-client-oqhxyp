@@ -20,27 +20,49 @@ export const AllCategories = () => {
   }, [refreshedCats]);
 
   return (
-    <div className="all-categories-container">
-      <h2>All Categories</h2>
+    <div className="container">
+      <div className="columns mt-4 mb-2">
+        <div className="column">
+          <h2 className="title is-4">All Categories</h2>
+        </div>
+        <div className="column is-narrow">
+          <CreateCategory setRefreshedCats={setRefreshedCats} refreshedCats={refreshedCats} />
+        </div>
+      </div>
       
       {allCategories.length === 0 ? (
-        <p>No categories.</p>
+        <div className="notification is-light">
+          <p>No categories found.</p>
+        </div>
       ) : (
-        <ul className="posts-list">
-          {allCategories.map((category) => (
-            <li key={category.id}>
-              <p>{category.label}</p>
-               <button type="button">
-                  DELETE
-                </button>
-                <button type="button">
-                  EDIT
-                </button>
-            </li>
-          ))}
-        </ul>
+        <div className="table-container">
+          <table className="table is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th className="has-text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allCategories.map((category) => (
+                <tr key={category.id}>
+                  <td>{category.label}</td>
+                  <td className="has-text-right">
+                    <div className="buttons is-right">
+                      <button className="button is-small is-warning">
+                        Edit
+                      </button>
+                      <button className="button is-small is-danger">
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-     <div> {<CreateCategory setRefreshedCats={setRefreshedCats} refreshedCats={refreshedCats}/>} </div>
     </div>
   );
 };
