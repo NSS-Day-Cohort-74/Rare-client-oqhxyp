@@ -12,6 +12,8 @@ import { NewPost } from "../components/posts/CreatePost.js"
 import { UpdatePost } from "../components/posts/UpdatePost.js"
 import { AllUsers } from "../components/users/AllUsers.js"
 import { UserDetails } from "../components/users/UserDetails.js"
+import { NewComment } from "../components/comments/NewComment.js"
+import { PostComments } from "../components/comments/PostComments.js"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -24,6 +26,8 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path="allPosts">
               <Route index element={<AllPosts token={token}/>}/>
               <Route path=":postId" element={<PostDetails token={token}/>}/>
+              <Route path=":postId/newComment" element={<NewComment token={token}/>}/>
+              <Route path=":postId/comments" element={<PostComments token={token}/>}/>
             </Route>
             <Route path="newPost" element={<NewPost token={token}/>}/>
             <Route path="myPosts">
