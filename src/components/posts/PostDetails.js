@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getPostById } from "../../services/postServices";
@@ -35,7 +34,11 @@ export const PostDetails = ({token}) => {
         <img src={post.image_url} alt="description here"></img>
         <section>
           <div>
-             Published on {post.publication_date} by {post.user.first_name} {post.user.last_name}
+             Published on {post.publication_date} by 
+             <Link to={`/users/${post.user_id}`}>
+              {post.user.first_name} {post.user.last_name}
+             </Link>
+             
           </div>
           <div>
             <Link to={`/allPosts/${post.id}/newComment`}><button>Add Comment</button></Link>
