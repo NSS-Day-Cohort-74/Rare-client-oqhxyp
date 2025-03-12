@@ -14,6 +14,7 @@ import { AllUsers } from "../components/users/AllUsers.js"
 import { UserDetails } from "../components/users/UserDetails.js"
 import { NewComment } from "../components/comments/NewComment.js"
 import { PostComments } from "../components/comments/PostComments.js"
+import { EditComment } from "../components/comments/EditComment.js"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -28,6 +29,7 @@ export const ApplicationViews = ({ token, setToken }) => {
               <Route path=":postId" element={<PostDetails token={token}/>}/>
               <Route path=":postId/newComment" element={<NewComment token={token}/>}/>
               <Route path=":postId/comments" element={<PostComments token={token}/>}/>
+              <Route path=":postId/:commentId/edit" element={<EditComment token={token}/>}/>
             </Route>
             <Route path="newPost" element={<NewPost token={token}/>}/>
             <Route path="myPosts">

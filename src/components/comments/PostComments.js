@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteComment, getComments } from "../../services/commentServices";
 
 
@@ -7,7 +7,7 @@ export const PostComments = ({token}) => {
 
   const [allComments, setComments] = useState([])
   const [PostComments, setPostComments] = useState([])
-  
+  const navigate=useNavigate()
   const{postId}=useParams()
     
     useEffect(() => {
@@ -36,6 +36,8 @@ export const PostComments = ({token}) => {
             alert("Comment deletion canceled.")
         }
     }
+    const handleEdit=(commentId)=>
+      navigate(`/allPosts/${postId}/${commentId}/edit`)
 
 
      const postTitle=PostComments.length>0?PostComments[0].post.title:null
@@ -76,7 +78,9 @@ export const PostComments = ({token}) => {
                         <div className="card-footer">
                           <div className="card-footer-item">
                             <div className="buttons">
-                              <button className="button is-warning">
+                              <button 
+                                className="button is-warning"
+                                onClick={()=>handleEdit(comment.id)}>
                                 Edit
                               </button>
                               <button 
