@@ -21,18 +21,18 @@ export const AllPosts = () => {
     };
 
 
-    // const fetchAllTagsPost = async () => {
-    //     setIsLoading(true);
-    //     try {
-    //         const tagsPostArray = await getPostTags();
-    //         setAllPosts(tagsPostArray);
-    //         console.log(tagsPostArray)
-    //     } catch (error) {
-    //         console.error("Error fetching allTags:", error);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // };
+    const fetchAllTagsPost = async () => {
+        setIsLoading(true);
+        try {
+            const tagsPostArray = await getPostTags();
+            setAllPosts(tagsPostArray);
+            console.log(tagsPostArray)
+        } catch (error) {
+            console.error("Error fetching allTags:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
 
     
