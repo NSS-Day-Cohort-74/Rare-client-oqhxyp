@@ -34,3 +34,7 @@ export const postTag = (tag) => {
   fetch("http://localhost:8088/tags", post)
   
 }
+
+export const getAllPostWithTags = () => {
+  return fetch("http://localhost:8088/posttags?_expand=tag&_expand=post&_expand=user&_expand=category").then(res => res.json())
+}

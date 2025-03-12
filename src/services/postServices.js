@@ -36,3 +36,6 @@ export const updatePost = async (postId, updatedData) => {
     return response.json();
   };
 
+export const getPostsWithTagsAttatched = () => {
+  return fetch("http://localhost:8088/posts?_expand=tags&_expand=users&_expand=categories").then(res => res.json())
+}
