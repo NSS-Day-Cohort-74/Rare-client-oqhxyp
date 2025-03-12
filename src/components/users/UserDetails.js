@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getUserById } from "../../services/userServices"
 import Logo from "../nav/rare.jpeg"
-import { createSubscriptionEntry, getSubscriptions,deleteSubscription } from "../../services/subscriptionServices"
+import { createSubscriptionEntry, getSubscriptions, deleteSubscription } from "../../services/subscriptionServices"
 
 export const UserDetails = ({token}) => {
     const [userDetails, setUserDetails] = useState()
@@ -56,31 +56,86 @@ export const UserDetails = ({token}) => {
 
     if(userDetails){
         return <>
-        <section>
-            <div>
-                <div>
-                    <img src={userDetails?.profile_image_url ? userDetails.profile_image_url : Logo} alt="Profile" />
+            <section className="section">
+                <div className="container">
+                    <div className="columns is-vcentered mb-6">
+                        <div className="column is-narrow">
+                            <figure className="image is-128x128">
+                                <img 
+                                    className="is-rounded" 
+                                    src={userDetails?.profile_image_url ? userDetails.profile_image_url : Logo} 
+                                    alt="Profile" 
+                                />
+                            </figure>
+                        </div>
+                        <div className="column">
+                            <h1 className="title is-3 mb-4">{userDetails.first_name} {userDetails.last_name}</h1>
+                            <p className="subtitle is-5 mb-3">@{userDetails.username}</p>
+                        </div>
+                        <div className="column is-narrow">
+                            {Number(userDetails.id) !== Number(token) && (
+                                <>
+                                    {!didCurrentUserSubscribe() && 
+                                        <button 
+                                            className="button is-primary is-rounded" 
+                                            onClick={handleSubscription}
+                                        >
+                                            Subscribe
+                                        </button>
+                                    }
+                                    {!!didCurrentUserSubscribe() && 
+                                        <button 
+                                            className="button is-danger is-rounded" 
+                                            onClick={handleUnsubscribe}
+                                        >
+                                            Unsubscribe
+                                        </button>
+                                    }
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    
+                    <div className="box">
+                        <h3 className="title is-4 mb-4">User Information</h3>
+                        <div className="content">
+                            <div className="field">
+                                <label className="label">Username:</label>
+                                <div className="control">
+                                    <p className="subtitle is-6">{userDetails.username}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="field">
+                                <label className="label">Email:</label>
+                                <div className="control">
+                                    <p className="subtitle is-6">{userDetails.email}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="field">
+                                <label className="label">Join Date:</label>
+                                <div className="control">
+                                    <p className="subtitle is-6">{new Date(userDetails.created_on).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="mt-5">
+                            <h3 className="title is-5 mb-3">About:</h3>
+                            <div className="content">
+                                <p>{userDetails.bio || "No bio available."}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p>{userDetails.first_name} {userDetails.last_name}</p>
-                </div>
-            </div>
-            <div>
-                <h3>{userDetails.username}</h3>
-                <h3>{userDetails.email}</h3>
-                <h3>{userDetails.created_on}</h3>
-                <h3>About:</h3>
-                <p>{userDetails.bio}</p>
-            </div>
-        </section>
-        <section>
-            {Number(userDetails.id) !== Number(token) && (
-                <>
-                    {!didCurrentUserSubscribe() && <button onClick={handleSubscription}>Subscribe</button>}
-                    {!!didCurrentUserSubscribe() && <button onClick={handleUnsubscribe}>Unsubscribe</button>}
-                </>
-            )}
-        </section>
-    </>
+            </section>
+        </>
     }
+    
+    return <div className="section">
+        <div className="container">
+            <p className="has-text-centered">Loading user details...</p>
+        </div>
+    </div>
 }
