@@ -25,6 +25,7 @@ export const UserPosts = ({ token }) => {
 
   const confirmDeletion = (postId) => {
     const userConfirmed = window.confirm("Are you sure you want to delete this post?");
+    console.log(userConfirmed)
     if (userConfirmed) {
       deletePost(postId)
         .then(() => deletePostTags(postId))
