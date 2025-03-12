@@ -32,8 +32,6 @@ export const updatePost = async (postId, updatedData) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
-    // return response.json();
   };
 
   export const deletePost= (postId)=>{
