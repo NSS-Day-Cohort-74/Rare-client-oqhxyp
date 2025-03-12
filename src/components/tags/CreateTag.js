@@ -32,7 +32,7 @@ export const CreateTag = ({setRefreshedTags, refreshedTags}) => {
                 placeholder="Enter Tag Name"/>
             </div>
             <div className="control">
-                <button class="button is-success" type="submit">
+                <button className="button is-success" type="submit">
                      Create Tag
                 </button>
             </div>
