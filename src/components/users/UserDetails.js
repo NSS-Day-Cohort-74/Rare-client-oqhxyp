@@ -127,6 +127,12 @@ export const UserDetails = ({token}) => {
                                 <p>{userDetails.bio || "No bio available."}</p>
                             </div>
                         </div>
+                        <div className="mt-5">
+                            <h3 className="title is-5 mb-3">Role:</h3>
+                            <div className="content">
+                                <p>{userDetails.is_admin ? "admin" : "author"}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
