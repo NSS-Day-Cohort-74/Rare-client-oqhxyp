@@ -30,3 +30,13 @@ export const activateUserById = async (userId, data) => {
     })
 
 }
+
+export const deactivateUser = async (userId, data) => {
+    await fetch(`http://localhost:8088/deactivateUsers/${userId}`, {
+        method: "PUT",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+}
