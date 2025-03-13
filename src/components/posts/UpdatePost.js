@@ -22,15 +22,8 @@ export const UpdatePost = ({token}) => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                console.log("Fetching post with ID:", postId);
-                
-            
                 const postData = await getPostById(postId);
-                console.log("Post data received:", postData);
                 const singlePost = postData;
-
-                console.log("post", singlePost)
-                
               
                 if (singlePost) {
                     setTitle(singlePost.title || "");
@@ -39,16 +32,13 @@ export const UpdatePost = ({token}) => {
                     setSelectedCategory(singlePost.category_id.toString());
                 }
                 
-    
                 const categoriesArray = await getCategories();
                 setCategories(categoriesArray);
-                
              
                 const tagsArray = await getTags();
                 setTags(tagsArray);
                 
                 const postTags = await getPostTags(postId);
-                console.log("Post tags:", postTags);
                 const formattedTags = postTags.map(tag => ({
                     tag_id: tag.id
                 }));
@@ -76,12 +66,9 @@ export const UpdatePost = ({token}) => {
             content: content,
             approved: 1
         };
-    
-        console.log("Sending update with data:", updatedPost);
         
         try {
             const response = await updatePost(updatedPost.id, updatedPost);
-            console.log("Update response:", response);
             
             if (selectedTags.length > 0) {
                 const tagsInPostArray = selectedTags.map((tag) => ({
@@ -89,7 +76,6 @@ export const UpdatePost = ({token}) => {
                     tag_id: tag.tag_id,
                 }));
         
-                console.log("Updating tags:", tagsInPostArray);
                 await createTagInPost(tagsInPostArray);
             }
             
@@ -101,17 +87,14 @@ export const UpdatePost = ({token}) => {
 
     const handleTagsChange = async (e) => {
         const tagId = Number(e.target.id);
-        console.log("Tag clicked:", tagId);
     
         let newSelectedTags;
         
         const foundTag = selectedTags.find(selectedTag => selectedTag.tag_id === tagId);
         
         if (foundTag) {
-            console.log("Removing tag:", tagId);
             newSelectedTags = selectedTags.filter(selectedTag => selectedTag.tag_id !== tagId);
         } else {
-            console.log("Adding tag:", tagId);
             const newTag = { tag_id: tagId };
             newSelectedTags = [...selectedTags, newTag];
         }
