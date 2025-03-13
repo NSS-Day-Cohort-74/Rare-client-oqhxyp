@@ -8,7 +8,7 @@ import { getUserById } from "../../services/userServices";
 export const NewPost = ({token}) => {
     const title=useRef()
     const imageUrl=useRef()
-    const content=useRef()
+    const content=useRef()  
     const [selectedCategory, setSelectedCategory] = useState({})
     const [selectedTags, setSelectedTags] = useState([])
     const [categories, setCategories]=useState([])
