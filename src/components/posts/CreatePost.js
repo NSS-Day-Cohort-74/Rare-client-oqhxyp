@@ -101,7 +101,7 @@ export const NewPost = ({token}) => {
             <div className="field">
               <label className="label">Content</label>
               <div className="control">
-                <input className="input" type="text" ref={content} />
+                <textarea className="textarea" ref={content}  style={{width:'100%' , height: '100px'}}/>
               </div>
             </div>
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getPosts } from "../../services/postServices";
 import { getPostTags } from "../../services/tagServices";
 
-export const AllPosts = () => {
+export const AdminAllPosts = () => {
     const [allPosts, setAllPosts] = useState([]);
     const [allTagsPost, setAllTagsPost] = useState([])
     const [isLoading, setIsLoading] = useState(true);
@@ -69,6 +69,8 @@ export const AllPosts = () => {
                                     <th>Category</th>
                                     <th>Content</th>
                                     <th>Tags</th>
+                                    <th>Approved</th>
+                                    <th>Unapproved</th>
                                 </tr>
                             </thead>
                             <tbody>
