@@ -17,7 +17,7 @@ export const AllPosts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const searchBarInput = useRef("");
   const [allTags, setAllTags] = useState([]); // got all tags
-  
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedTagId, setSelectedTagId] = useState(0); // selected tag id
  
 
@@ -126,96 +126,66 @@ export const AllPosts = () => {
 
 
   return (
-    <>
-      <label>
-        Filter By Category {"\t"}
-        <select
-          defaultValue="0"
-          onChange={(event) =>
-            setSelectedCategoryId(parseInt(event.target.value))
-          }
-        >
-          <option value="0">All Categories</option>
-          {allCategories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {" "}
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Filter By Author {"\t"}
-        <select
-          defaultValue="0"
-          onChange={(event) =>
-            setSelectedAuthorId(parseInt(event.target.value))
-          }
-        >
-          <option value="0">All Authors</option>
-          {allAuthors.map((c) => (
-            <option key={c.id} value={c.id}>
-              {" "}
-              {c.first_name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Filter By Tag {"\t"}
-        <select
-          defaultValue="0"
-          onChange={(event) => setSelectedTagId(parseInt(event.target.value))}
-        >
-          <option value="0">All Tags</option>
-          {allTags.map((t) => (
-            <option key={t.id} value={t.id}>
-              {" "}
-              {t.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        {"\t"}
-        <input ref={searchBarInput} type="text" placeholder="Search By Title" />
-      </label>
-      <button
-        onClick={() => {
-          setSearchTerm(searchBarInput.current.value);
-        }}
-      >
-        enter
-      </button>
-      <div className="all-post-container">
-        <h2>All Posts</h2>
-
-        {filteredPosts.length === 0 ? (
-          <p>No posts found.</p>
-        ) : (
-          <ul className="posts-list">
-            {filteredPosts.map((p) => (
-              <li key={p.id}>
-                <p>--------------------------------</p>
-                <Link to={`/allPosts/${p.id}`}>{p.title}</Link>
-                <div className="card-info">
-                  <p>{p.content}</p>
-                  <p>{p.publication_date}</p>
-                  <p>{p.categories.label}</p>
-                  <p>{p.user.first_name}</p>
-                  <p>{p.user.last_name}</p>
-                  <p>=====================</p>
-                  { p.tags && p.tags.map(t => (
-                    <p key={t.id}>{t.label}</p>
-                  ))
-                  }
-                  <p>--------------------------------</p>
+    <section className="section">
+        <div className="container">
+            <h1 className="title has-text-centered mb-6">All Posts</h1>
+            
+            {!isLoading ? (
+                <div className="has-text-centered">
+                    <button className="button is-loading is-large">Loading</button>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </>
-  );
+            ) : filteredPosts.length === 0 ? (
+                <div className="notification is-warning is-light">
+                    <p className="has-text-centered">No posts found.</p>
+                </div>
+            ) : (
+                <div className="table-container">
+                    <table className="table is-fullwidth is-hoverable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Content</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredPosts.map((post) => (
+                                <tr key={post.id}>
+                                    <td>
+                                        <Link to={`/allPosts/${post.id}`} className="has-text-weight-bold has-text-primary">
+                                            {post.title}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <span className="is-flex is-flex-direction-column">
+                                            {post.user.first_name} {post.user.last_name}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <time dateTime={post.publication_date}>
+                                            {new Date(post.publication_date).toLocaleDateString()}
+                                        </time>
+                                    </td>
+                                    <td>
+                                        <span className="tag is-primary is-light">{post.categories.label}</span>
+                                    </td>
+                                    <td>
+                                        <p className="content is-small has-text-grey">
+                                            {post.content.length > 100 
+                                                ? `${post.content.substring(0, 100)}...` 
+                                                : post.content}
+                                        </p>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </div>
+    </section>
+);
 };

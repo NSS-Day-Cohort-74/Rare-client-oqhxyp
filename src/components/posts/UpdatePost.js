@@ -186,7 +186,7 @@ export const UpdatePost = ({token}) => {
                         <div className="control">
                             <textarea 
                                 className="textarea" 
-                                rows="10"
+                                style={{width:'100%' , height: '100px'}}
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                             ></textarea>
