@@ -19,6 +19,20 @@ export const AdminUsers = () => {
     if(allUsers){
         return<>
             <h1>Users</h1>
+        <section>
+            <div>
+                Username
+            </div>
+            <div>
+              Full Name
+            </div>
+            <div>
+                Active
+            </div>
+            <div>
+                Role
+            </div>
+        </section>
             <section>
                 {allUsers.map(user => {
                     return <>
@@ -26,6 +40,9 @@ export const AdminUsers = () => {
                             <Link to={`/users/${user.id}`}>
                                 {user.username}
                             </Link>
+                        </div>
+                        <div>
+                            {user.first_name} {user.last_name}
                         </div>
                         <div>
                             <input
