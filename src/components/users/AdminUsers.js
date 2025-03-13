@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { getUsers } from "../../services/userServices"
+import { activateUserById, getUsers, } from "../../services/userServices"
 import { Link, useNavigate } from "react-router-dom"
 
 export const AdminUsers = () => {
     const [allUsers, setAllUsers] = useState()
+
     const navigate = useNavigate()
 
     const fetchData = () => {
@@ -12,12 +13,20 @@ export const AdminUsers = () => {
         })
     }
 
+    const handleViewDeactivated = () => {
+        const foundDeactivatedUsers = allUsers.filter(users => users?.active === 0)
+        setAllUsers(foundDeactivatedUsers)
+    }
+
     useEffect(() => {
         fetchData()
     },[])
 
     if(allUsers){
         return<>
+            <section>
+                <button onClick={handleViewDeactivated}>View Deactivated</button>
+            </section>
             <section className="section">
                 <div className="container">
                     <h1 className="title has-text-centered mb-6">Users</h1>
@@ -70,6 +79,17 @@ export const AdminUsers = () => {
                                             event.preventDefault()
                                             navigate(`/users/${user.id}/edit`)
                                         }}>Edit</button>
+                                        {user.active === 0 &&
+                                            <button onClick={async (event) => {
+                                                event.preventDefault()
+                                                const updatedActive = {
+                                                    "id": user.id,
+                                                    "active": 1
+                                                }
+                                                await activateUserById(Number(user.id), updatedActive)
+                                                fetchData()
+                                            }}>Reactivate User</button>
+                                        }
                                     </td>
                                 </tr>
                             ))}
