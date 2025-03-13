@@ -14,20 +14,17 @@ export const UserDetails = ({token}) => {
         getUserById(Number(userId)).then(user => {
             setUserDetails(user)
         })
-        getSubscriptions().then(subscription => {
-            setSubscriptions(subscription)
-        })
     }
 
     useEffect(() => {
         fetchUserDetails()
-    },[])
+    },[token])
 
     useEffect(() => {
         getSubscriptions().then(subscription => {
             setSubscriptions(subscription)            
         })
-    },[subscriptions])
+    },[])
 
     //evaluates user length and if it is greater than 0, it has found that the current user subscribed to this author
     const didCurrentUserSubscribe = () => {
