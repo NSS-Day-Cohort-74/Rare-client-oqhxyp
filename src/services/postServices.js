@@ -34,9 +34,12 @@ export const updatePost = async (postId, updatedData) => {
     }
   };
 
+
   export const deletePost= (postId)=>{
     return fetch(`http://localhost:8088/posts/${postId}`, {
       method: "DELETE",})
   }
 
-
+export const getPostsWithTagsAttatched = () => {
+  return fetch("http://localhost:8088/posts?_expand=tags&_expand=users&_expand=categories").then(res => res.json())
+}

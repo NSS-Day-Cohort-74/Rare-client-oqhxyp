@@ -57,3 +57,7 @@ export const updatePostTags = (postId, tagIds) => {
   })
     .then(response => response.json())
 };
+
+export const getAllPostWithTags = () => {
+  return fetch("http://localhost:8088/posttags?_expand=tag&_expand=post&_expand=user&_expand=category").then(res => res.json())
+}
