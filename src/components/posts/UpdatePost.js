@@ -1,109 +1,102 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPostById, getPosts, updatePost } from "../../services/postServices";
+import { getPostById, updatePost } from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
 import { createTagInPost, getPostTags, getTags, updatePostTags } from "../../services/tagServices";
 
 export const UpdatePost = ({token}) => {
     const { postId } = useParams();
     const navigate = useNavigate();
-    const [post, setPost] = useState(null);
-    const title = useRef();
-    const imageUrl = useRef();
-    const content = useRef();
+    
+
+    const [title, setTitle] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
+    const [content, setContent] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedTags, setSelectedTags] = useState([]);
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log("Fetching post with ID:", postId);
+            setIsLoading(true);
+            try {
+                console.log("Fetching post with ID:", postId);
+                
             
-            const postData = await getPostById(postId);
-            console.log("Post data received:", postData);
-            const singlePost = postData[0];
-            setPost(singlePost);
-            
-            const categoriesArray = await getCategories();
-            setCategories(categoriesArray);
-            
-            const tagsArray = await getTags();
-            setTags(tagsArray);
-            
-            const postTags = await getPostTags(postId);
-            console.log("Post tags:", postTags);
-            const formattedTags = postTags.map(tag => ({
-                tag_id: tag.id
-            }));
-            setSelectedTags(formattedTags);
-            
-            if (singlePost) {
-                console.log("Setting category to:", singlePost.category_id);
-                setSelectedCategory(singlePost.category_id.toString());
+                const postData = await getPostById(postId);
+                console.log("Post data received:", postData);
+                const singlePost = postData;
+
+                console.log("post", singlePost)
+                
+              
+                if (singlePost) {
+                    setTitle(singlePost.title || "");
+                    setImageUrl(singlePost.image_url || "");
+                    setContent(singlePost.content || "");
+                    setSelectedCategory(singlePost.category_id.toString());
+                }
+                
+    
+                const categoriesArray = await getCategories();
+                setCategories(categoriesArray);
+                
+             
+                const tagsArray = await getTags();
+                setTags(tagsArray);
+                
+                const postTags = await getPostTags(postId);
+                console.log("Post tags:", postTags);
+                const formattedTags = postTags.map(tag => ({
+                    tag_id: tag.id
+                }));
+                setSelectedTags(formattedTags);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
         
         fetchData();
     }, [postId]);
 
-    useEffect(() => {
-        if (post) {
-            console.log("Setting form values from post:", post);
-            if (title.current) title.current.value = post.title || "";
-            if (imageUrl.current) imageUrl.current.value = post.image_url || "";
-            if (content.current) content.current.value = post.content || "";
-        }
-    }, [post]);
-
-    useEffect(() => {
-        const fetchPost = async () => {
-          if (postId) {
-            const fetchedPost = await getPosts(postId);
-            setPost(fetchedPost);
-          }
-        };
-        
-        fetchPost();
-      }, [postId]);
-
     const handleSavePost = async (event) => {
         event.preventDefault();
-        
-        // Check if post is loaded
-        if (!post) {
-            console.error("Post data not loaded yet");
-            return; 
-        }
-        
+       
         const updatedPost = {
             id: parseInt(postId),
             user_id: token,
             category_id: parseInt(selectedCategory),
-            title: title.current.value,
-            publication_date: post?.publication_date || new Date().toISOString(),
-            image_url: imageUrl.current.value,
-            content: content.current.value,
-            approved: post?.approved || 1
+            title: title,
+            publication_date: new Date().toISOString(),
+            image_url: imageUrl,
+            content: content,
+            approved: 1
         };
     
         console.log("Sending update with data:", updatedPost);
         
+        try {
+            const response = await updatePost(updatedPost.id, updatedPost);
+            console.log("Update response:", response);
+            
+            if (selectedTags.length > 0) {
+                const tagsInPostArray = selectedTags.map((tag) => ({
+                    post_id: parseInt(postId),
+                    tag_id: tag.tag_id,
+                }));
         
-        const response = await updatePost(updatedPost.id, updatedPost);
-        console.log("Update response:", response);
-        
-        if (selectedTags.length > 0) {
-            const tagsInPostArray = selectedTags.map((tag) => ({
-                post_id: parseInt(postId),
-                tag_id: tag.tag_id,
-            }));
-    
-            console.log("Updating tags:", tagsInPostArray);
-            await createTagInPost(tagsInPostArray);
+                console.log("Updating tags:", tagsInPostArray);
+                await createTagInPost(tagsInPostArray);
+            }
+            
+            navigate(`/myPosts`);
+        } catch (error) {
+            console.error("Error updating post:", error);
         }
-        
-        navigate(`/myPosts`);
     };
 
     const handleTagsChange = async (e) => {
@@ -123,24 +116,22 @@ export const UpdatePost = ({token}) => {
             newSelectedTags = [...selectedTags, newTag];
         }
     
-        // Update the state first for immediate UI response
+       
         setSelectedTags(newSelectedTags);
         
         try {
-            // Extract just the tag IDs to send to the service
             const tagIds = newSelectedTags.map(tag => tag.tag_id);
-            
-            // Call the updatePostTags service
             await updatePostTags(postId, tagIds);
             
-            // Success - no need to do anything as state is already updated
         } catch (error) {
-            // Handle the error - revert the UI change
             setSelectedTags(selectedTags);
-            // Show error notification to the user
             console.error('Failed to update tags:', error);
         }
     };
+
+    if (isLoading) {
+        return <div className="has-text-centered p-5">Loading post data...</div>;
+    }
 
     return (
         <>
@@ -151,14 +142,24 @@ export const UpdatePost = ({token}) => {
                     <div className="field">
                         <label className="label">Title</label>
                         <div className="control">
-                            <input className="input" type="text" ref={title} />
+                            <input 
+                                className="input" 
+                                type="text" 
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
                         </div>
                     </div>
             
                     <div className="field">
                         <label className="label">Image Url</label>
                         <div className="control">
-                            <input className="input" type="text" ref={imageUrl} />
+                            <input 
+                                className="input" 
+                                type="text" 
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                            />
                         </div>
                     </div>
 
@@ -183,7 +184,12 @@ export const UpdatePost = ({token}) => {
                     <div className="field">
                         <label className="label">Content</label>
                         <div className="control">
-                            <textarea className="textarea" ref={content} rows="10"></textarea>
+                            <textarea 
+                                className="textarea" 
+                                style={{width:'100%' , height: '100px'}}
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                            ></textarea>
                         </div>
                     </div>
 
@@ -191,7 +197,6 @@ export const UpdatePost = ({token}) => {
                         <label className="label">Tags</label>
                         <div className="control">
                             {tags.map(tag => {
-                        
                                 const isChecked = selectedTags.some(selectedTag => 
                                     selectedTag.tag_id === tag.id
                                 );
