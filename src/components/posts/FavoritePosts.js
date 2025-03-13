@@ -9,10 +9,12 @@ export const FavoritePosts = ({token}) => {
       setFilteredPosts(post)
     })
   }
-
+  
   useEffect(()=> {
     fetchSubscriptionPosts()
   },[])
+
+  console.log(filteredPosts)
   
   if(filteredPosts.length === 0){
     return <>
