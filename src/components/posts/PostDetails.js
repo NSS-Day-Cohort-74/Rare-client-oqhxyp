@@ -21,35 +21,55 @@ export const PostDetails = ({token}) => {
 
   if(postId && post){
     return <>
-      <section>
-        <h1>{post.title}</h1>
-        <section>
-            <div>
-              Delete and Settings Placeholder
-            </div>
-            <div>
-              {post.categories.label}
-            </div>
-        </section>
-        <img src={post.image_url} alt="description here"></img>
-        <section>
-          <div>
-             Published on {post.publication_date} by 
-             <Link to={`/users/${post.user_id}`}>
+    <div className="columns is-centered">
+    <div className="column is-half">
+    <section className="container has-background-light box">
+      <div className="columns is-vcentered">
+        
+        
+        <div className="column has-text-centered">
+          <h1 className="title">{post.title}</h1>
+        </div>
+        <div className="column is-narrow">
+          <div className="tag is-medium">{post.categories.label}</div>
+        </div>
+      </div>
+      <div style={{ 
+          maxWidth: "500px", 
+          maxHeight: "300px", 
+          overflow: "hidden", 
+          margin: "0 auto"
+          }}>
+          <img 
+            src={post.image_url} 
+            alt="Post Cover" 
+            style={{ width: "100%", objectFit: "cover" }}
+          />
+      </div>
+      <div className="columns is-vcentered mt-4">
+        <div className="column">
+          <p>
+            Published on {post.publication_date} by{' '}
+            <Link to={`/users/${post.user_id}`}>
               {post.user.first_name} {post.user.last_name}
-             </Link>
-             
-          </div>
-          <div>
-            <Link to={`/allPosts/${post.id}/newComment`}><button>Add Comment</button></Link>
-            <Link to={`/allPosts/${post.id}/comments`}><button>View Comments</button></Link>
-          </div>
-        </section>
-        <section>
-          {post.content}
-        </section>
+            </Link>
+          </p>
+        </div>
+        <div className="column has-text-center">
+          <Link to={`/allPosts/${post.id}/newComment`}>
+            <button className="button is-primary">Add Comment</button>
+          </Link>
+          <Link to={`/allPosts/${post.id}/comments`}>
+            <button className="button is-info ml-2">View Comments</button>
+          </Link>
+        </div>
+      </div>
+  
+      <section className="mt-4">
+        {post.content}
       </section>
-    </>
+    </section></div></div>
+  </>
   
 
   }}
