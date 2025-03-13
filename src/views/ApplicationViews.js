@@ -14,6 +14,7 @@ import { AllUsers } from "../components/users/AllUsers.js"
 import { UserDetails } from "../components/users/UserDetails.js"
 import { NewComment } from "../components/comments/NewComment.js"
 import { PostComments } from "../components/comments/PostComments.js"
+import { EditUserDetails } from "../components/users/EditUserDetails.js"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -39,6 +40,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path="users">
               <Route index element= {<AllUsers token={token}/>}/>
               <Route path=":userId" element={<UserDetails token={token}/>}/>
+              <Route path=":userId/edit" element={<EditUserDetails token={token} />}/>
             </Route> 
       </Route>
     </Routes>

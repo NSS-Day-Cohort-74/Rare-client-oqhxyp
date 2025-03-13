@@ -1,58 +1,33 @@
-import { useEffect, useState } from "react"
-import { getUsers } from "../../services/userServices"
-import { Link } from "react-router-dom"
-
+import { useState, useEffect } from "react"
+import { AuthorUsers } from "./AuthorUsers"
+import { getUserById } from "../../services/userServices"
+import { AdminUsers } from "./AdminUsers"
 
 export const AllUsers = ({token}) => {
-    const [allUsers, setAllUsers] = useState()
+    const [currentUser, setCurrentUser] = useState()
 
-    const fetchData = () => {
-        getUsers().then((usersArray) => {
-            setAllUsers(usersArray)
-        })
+    const fetchCurrentUser = () => {
+        getUserById(Number(token)).then(user => (
+            setCurrentUser(user)
+        ))
     }
 
     useEffect(() => {
-        fetchData()
+        fetchCurrentUser()
     },[])
 
-    if(allUsers){
-        return <>
-        <h1>Users</h1>
-        <section>
-            <div>
-                Username
-            </div>
-            <div>
-                First Name
-            </div>
-            <div>
-                Last Name
-            </div>
-            <div>
-                Email
-            </div>
-        </section>
-        <section>
-            {allUsers.map(user => {
-                return <>
-                    <div key={user.id}>
-                        <Link to={`/users/${user.id}`}>
-                            {user.username}
-                        </Link>
-                    </div>
-                    <div>
-                        {user.first_name}
-                    </div>
-                    <div>
-                        {user.last_name}
-                    </div>
-                    <div>
-                        {user.email}
-                    </div>
-                </>
-            })}  
-        </section>
-    </>
+    console.log(currentUser)
+
+    if (currentUser){
+        if (currentUser.is_admin === 1){
+            return <>
+                <AdminUsers currentUser={currentUser}/>
+            </>
+        }
+        else {
+            return <>
+                <AuthorUsers />
+            </>
+        }
     }
 }
