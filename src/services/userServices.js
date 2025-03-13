@@ -15,3 +15,13 @@ export const updateUserById = async (userId, data) => {
         body: JSON.stringify(data)
     })
 }
+
+export const activateUserById = async (userId, data) => {
+    await fetch (`http://localhost:8088/reactivateUsers/${userId}`, {
+        method: "PUT",
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+}
