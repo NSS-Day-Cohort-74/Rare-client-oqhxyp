@@ -202,7 +202,7 @@ export const AuthorAllPost = () => {
     <div className="level-left">
       <div className="level-item">
         <div className="field">
-          <label className="label">Search:</label>
+          <label className="label">🔍</label>
       <label>
         {"\t"}
         <input className="input is-rounded is-small" ref={searchBarInput} type="text" placeholder="Search By Title" />
