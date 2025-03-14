@@ -27,14 +27,12 @@ export const NewPost = ({token}) => {
                     setUserDetails(user)
                 })
     },[])
-    console.log(userDetails)
-
+   
     const handleTagsChange = (e) => {
       const foundTag = selectedTags.find(selectedTag => {
         return selectedTag.tag_id === Number(e.target.id)
       })
       if(foundTag){
-        console.log("Found Tags:" + foundTag)
         const newCurrentTag = selectedTags.filter(selectedTag => {
           return selectedTag.id !== foundTag.id
         })
@@ -64,9 +62,9 @@ export const NewPost = ({token}) => {
       createdPost.approved=1}
     else{createdPost.approved=0}
     
-    console.log(createdPost)
+   
     const NewPost= await createNewPost(createdPost)
-    console.log(NewPost)
+
     if (selectedTags.length > 0 && NewPost.id){
       const tagsInPostArray = selectedTags.map((tag) =>({
         post_id: NewPost.id,
