@@ -1,22 +1,18 @@
 import { useRef } from "react"
 import { postTag } from "../../services/tagServices.js"
 
-export const CreateTag = ({setRefreshedTags, refreshedTags}) => {
+export const CreateTag = ({setRefreshedTags, refreshedTags, resetState}) => {
     const tagInput = useRef()
 
-    const handleCreateTag = (event) => {
+    const handleCreateTag = async (event) => {
         event.preventDefault()
         const tag = {
             label: tagInput.current.value
         }
-        postTag(tag)
-        if(refreshedTags) {
-
-            setRefreshedTags(false)
-        } else {
-            setRefreshedTags(true)
-            
-        }
+        await postTag(tag)
+        setRefreshedTags(true)
+        tagInput.current.value = ""
+        resetState()
 
         console.log(tag)
         console.log(tagInput)

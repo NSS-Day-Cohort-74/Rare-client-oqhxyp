@@ -4,6 +4,7 @@ import { getPostsWithTagsAttatched } from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
 import { getAllUsers } from "../../services/userServices";
 import { getAllTags } from "../../services/tagServices";
+import { HumanDate } from "../utils/HumanDate";
 
 export const AuthorAllPost = () => {
   const [allPosts, setAllPosts] = useState([]);
@@ -74,7 +75,7 @@ export const AuthorAllPost = () => {
   }, [selectedAuthorId]);
 
   useEffect(() => {
-    setFilteredPosts(allPosts.filter(p => p.approved == 1));
+    setFilteredPosts(allPosts.filter((p) => p.approved == 1));
   }, [allPosts]);
 
   // you can filter by category AND by author!!!
@@ -123,8 +124,6 @@ export const AuthorAllPost = () => {
     <>
     <section className="box">
     <div className="select has-text-centered is-flex is-justify-content-space-evenly dropdown is-active is-light is-right is-medium mb-6">
-
-
       <label className="label">
        <label className="label">📂 {"\t"}</label> 
         <select
@@ -133,11 +132,7 @@ export const AuthorAllPost = () => {
             setSelectedCategoryId(parseInt(event.target.value))
           }
         >
-          
-
           <option value="0">All Categories</option>
-          
-
           {allCategories.map((c) => (
             <option key={c.id} value={c.id}>
               {" "}
@@ -147,9 +142,6 @@ export const AuthorAllPost = () => {
         </select>
       </label>
       <label>
-
-
-
        <label className="label">✍️ {"\t"}</label> 
         <select
           defaultValue="0"
@@ -184,17 +176,6 @@ export const AuthorAllPost = () => {
 
     </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
       <section className="section">
         <div className="container">
       <div  className="level-left">
@@ -218,8 +199,6 @@ export const AuthorAllPost = () => {
       </div>
 
     </div>
-
-  
  </div>
           <h1 className="title has-text-centered mb-6">All Posts</h1>
 
@@ -262,7 +241,13 @@ export const AuthorAllPost = () => {
                       </td>
                       <td>
                         <time dateTime={post.publication_date}>
-                          {new Date(post.publication_date).toLocaleDateString()}
+                          {
+                            <HumanDate
+                              date={new Date(
+                                post.publication_date
+                              ).toLocaleDateString()}
+                            />
+                          }
                         </time>
                       </td>
                       <td>
@@ -277,14 +262,15 @@ export const AuthorAllPost = () => {
                             : post.content}
                         </p>
                       </td>
-                    <td>
-
-                  { post.tags && post.tags.map((t, i) => (
-                    <span key={t.id}>  {t.label} {i < post.tags.length - 1 ? ",":""}</span>
-
-                  ))
-                }
-                </td>
+                      <td>
+                        {post.tags &&
+                          post.tags.map((t, i) => (
+                            <span key={t.id}>
+                              {" "}
+                              {t.label} {i < post.tags.length - 1 ? "," : ""}
+                            </span>
+                          ))}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

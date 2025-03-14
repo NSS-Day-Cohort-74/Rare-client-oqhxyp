@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 export const AdminUsers = () => {
     const [allUsers, setAllUsers] = useState([])
     const [filteredUsers, setFilteredUsers] = useState(null); // New state for filtered users
+
     const navigate = useNavigate()
 
     const fetchData = async () => {
@@ -44,8 +45,8 @@ export const AdminUsers = () => {
 
     return (
         <>
-            <section>
-                <button onClick={handleViewDeactivated}>View Deactivated</button>
+            <section className="mt-4 mr-4 has-text-right">
+                <button className=" button is-danger is-rounded" onClick={handleViewDeactivated}>View Deactivated</button>
             </section>
             <section className="section">
                 <div className="container">
@@ -73,7 +74,7 @@ export const AdminUsers = () => {
                                         <td>
                                             <input
                                                 type="checkbox"
-                                                defaultChecked={Boolean(user.active)}
+                                                checked={Boolean(user.active)}
                                                 disabled
                                             />
                                             Active
@@ -95,20 +96,22 @@ export const AdminUsers = () => {
                                             />Admin
                                         </td>
                                         <td>
-                                            <button onClick={(event) => {
-                                                event.preventDefault();
-                                                navigate(`/users/${user.id}/edit`);
-                                            }}>Edit</button>
-                                            {user.active === 0 &&
-                                                <button onClick={async (event) => {
+                                            <div className="buttons is-right">
+                                                <button className="button is-small is-warning" onClick={(event) => {
                                                     event.preventDefault();
-                                                    await activateUserById(user.id, { id: user.id, active: 1 });
-                                                    fetchData();
-                                                }}>Reactivate User</button>
+                                                    navigate(`/users/${user.id}/edit`);
+                                                }}>Edit</button>
+                                                {user.active === 0 &&
+                                                    <button className="button is-small is-success" onClick={async (event) => {
+                                                        event.preventDefault();
+                                                        await activateUserById(user.id, { id: user.id, active: 1 });
+                                                        fetchData();
+                                                    }}>Reactivate</button>
                                             }
-                                            {user.active === 1 && 
-                                                <button onClick={() => confirmDeactivation(user.id)}>Deactivate</button>
-                                            }
+                                                {user.active === 1 && 
+                                                    <button className="button is-small is-danger" onClick={() => confirmDeactivation(user.id)}>Deactivate</button>
+                                                }
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}

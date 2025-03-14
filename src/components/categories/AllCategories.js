@@ -17,7 +17,11 @@ export const AllCategories = () => {
 
   useEffect(() => {
     fetchAllCategories();
-  }, [refreshedCats]);
+  }, []);
+
+  useEffect(() => {
+    fetchAllCategories()
+  },[refreshedCats])
 
   return (
     <div className="container">
@@ -26,7 +30,7 @@ export const AllCategories = () => {
           <h2 className="title is-4">All Categories</h2>
         </div>
         <div className="column is-narrow">
-          <CreateCategory setRefreshedCats={setRefreshedCats} refreshedCats={refreshedCats} />
+          <CreateCategory setRefreshedCats={setRefreshedCats} refreshedCats={refreshedCats} resetPageState={fetchAllCategories}/>
         </div>
       </div>
       
