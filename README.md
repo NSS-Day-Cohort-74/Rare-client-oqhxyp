@@ -79,18 +79,30 @@ The application offers a user-friendly navbar with the following sections:
    - Click "Subscribe" on profiles of interest
    - Access posts from subscribed users on your Favorites page
 
+4. **User Management**
+   - User Activation/Deactivation: Administrators can enable or disable user accounts as needed
+   - Admin Role Assignment: Privileged administrators can promote regular users to admin status
+
+5. **Content Moderation**
+   - Post Approval System: All new posts require admin approval before becoming publicly visible
+   - Content Review: Administrators can review posts for quality, appropriateness, and adherence to community guidelines
+   - Moderation Dashboard: A specialized interface for admins to efficiently process  approve pending posts
+
+6. **Admin Access**
+   - Access the admin dashboard by logging in with administrator credentials
+   - Navigate to the "User Management" section to modify user status and roles
+   - Use the "Content Moderation" panel to approve or reject pending posts
+
 ## Contributing
 
 1. Fork the repository
 2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
+3. Commit your changes: `git commit -m 'Add some amazing feature`
 4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
-## linked-in 
-John Williams: "https://www.linkedin.com/in/john-williams-2007b4352/"
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
+## Created by
+Edita Adomaityte<a href="https://linkedin.com/in/edita-adomaityte" target="_blank"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="Edita Adomaityte LinkedIn" style="height: auto !important;width: auto !important;" /></a>
+John Williams <a href="www.linkedin.com/in/john-williams-2007b4352" target="_blank"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="John Williams LinkedIn" style="height: auto !important;width: auto !important;" /></a>
+Kai Swain<a href="https://www.linkedin.com/in/kai-swain/" target="_blank"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="Kai Swain LinkedIn" style="height: auto !important;width: auto !important;" /></a>
+JoAnna Scott-Scates<a href="https://www.linkedin.com/in/joanna-scott-scates/" target="_blank"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="JoAnna Scott-Scates LinkedIn" style="height: auto !important;width: auto !important;" /></a>
