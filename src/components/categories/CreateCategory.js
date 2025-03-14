@@ -19,8 +19,6 @@ export const CreateCategory = ({setRefreshedCats, refreshedCats}) => {
             
         }
 
-        console.log(cat)
-        console.log(catInput)
     }
     return(
         <form onSubmit={handleCreateCat} className="field has-addons">
