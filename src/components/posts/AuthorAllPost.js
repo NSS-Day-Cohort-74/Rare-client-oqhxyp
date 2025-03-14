@@ -122,89 +122,84 @@ export const AuthorAllPost = () => {
 
   return (
     <>
-      <section className="box">
-        <div className="is-flex is-justify-content-space-evenly">
-          <label>
-            <label className="label">Filter By Category: {"\t"}</label>
-            <select
-              defaultValue="0"
-              onChange={(event) =>
-                setSelectedCategoryId(parseInt(event.target.value))
-              }
-            >
-              <option value="0">All Categories</option>
+    <section className="box">
+    <div className="select has-text-centered is-flex is-justify-content-space-evenly dropdown is-active is-light is-right is-medium mb-6">
+      <label className="label">
+       <label className="label">📂 {"\t"}</label> 
+        <select
+          defaultValue="0"
+          onChange={(event) =>
+            setSelectedCategoryId(parseInt(event.target.value))
+          }
+        >
+          <option value="0">All Categories</option>
+          {allCategories.map((c) => (
+            <option key={c.id} value={c.id}>
+              {" "}
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+       <label className="label">✍️ {"\t"}</label> 
+        <select
+          defaultValue="0"
+          onChange={(event) =>
+            setSelectedAuthorId(parseInt(event.target.value))
+          }
+        >
+          <option value="0">All Authors</option>
+          {allAuthors.map((c) => (
+            <option key={c.id} value={c.id}>
+              {" "}
+              {c.first_name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+       <label className="label">🔖 {"\t"}</label> 
+        <select
+          defaultValue="0"
+          onChange={(event) => setSelectedTagId(parseInt(event.target.value))}
+        >
+          <option value="0">All Tags</option>
+          {allTags.map((t) => (
+            <option key={t.id} value={t.id}>
+              {" "}
+              {t.label}
+            </option>
+          ))}
+        </select>
+      </label>
 
-              {allCategories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {" "}
-                  {c.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <label className="label">Filter By Author: {"\t"}</label>
-            <select
-              defaultValue="0"
-              onChange={(event) =>
-                setSelectedAuthorId(parseInt(event.target.value))
-              }
-            >
-              <option value="0">All Authors</option>
-              {allAuthors.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {" "}
-                  {c.first_name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <label className="label">Filter By Tag: {"\t"}</label>
-            <select
-              defaultValue="0"
-              onChange={(event) =>
-                setSelectedTagId(parseInt(event.target.value))
-              }
-            >
-              <option value="0">All Tags</option>
-              {allTags.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {" "}
-                  {t.label}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </section>
-
+    </div>
+    </section>
       <section className="section">
         <div className="container">
-          <div className="level-left">
-            <div className="level-left">
-              <div className="level-item">
-                <div className="field">
-                  <label className="label">Search:</label>
-                  <label>
-                    {"\t"}
-                    <input
-                      ref={searchBarInput}
-                      type="text"
-                      placeholder="Search By Title"
-                    />
-                  </label>
-                  <button
-                    onClick={() => {
-                      setSearchTerm(searchBarInput.current.value);
-                    }}
-                  >
-                    enter
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div  className="level-left">
+      
+    <div className="level-left">
+      <div className="level-item">
+        <div className="field">
+          <label className="label">🔍</label>
+      <label>
+        {"\t"}
+        <input className="input is-rounded is-small" ref={searchBarInput} type="text" placeholder="Search By Title" />
+      </label>
+      <button className="button is-successful is-rounded is-small"
+        onClick={() => {
+          setSearchTerm(searchBarInput.current.value);
+        }}
+      >
+        enter
+      </button>
+        </div>
+      </div>
+
+    </div>
+ </div>
           <h1 className="title has-text-centered mb-6">All Posts</h1>
 
           {!isLoading ? (

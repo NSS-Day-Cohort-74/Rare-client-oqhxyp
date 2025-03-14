@@ -171,11 +171,12 @@ export const AdminAllPosts = () => {
 
   return (
     <>
-      <section className="box">
-        <div className="is-flex is-justify-content-space-evenly">
-          <label>
-            <label className="label">Filter By Category: {"\t"}</label>
+      <section className="box ">
+        <div className="select has-text-centered is-flex is-justify-content-space-evenly dropdown is-active is-light is-right is-medium mb-6 ">
+          <label className="label">
+            <label className="label m-auto">📂 {"\t"}</label> 
             <select
+                className="select is-medium"
               defaultValue="0"
               onChange={(event) =>
                 setSelectedCategoryId(parseInt(event.target.value))
@@ -191,8 +192,9 @@ export const AdminAllPosts = () => {
             </select>
           </label>
           <label>
-            <label className="label">Filter By Author: {"\t"}</label>
+            <label className="label m-auto">✍️ {"\t"}</label> 
             <select
+            className="select is-medium"
               defaultValue="0"
               onChange={(event) =>
                 setSelectedAuthorId(parseInt(event.target.value))
@@ -208,8 +210,9 @@ export const AdminAllPosts = () => {
             </select>
           </label>
           <label>
-            <label className="label">Filter By Tag: {"\t"}</label>
+            <label className="label m-auto">🔖 {"\t"}</label> 
             <select
+            className="select is-medium"
               defaultValue="0"
               onChange={(event) =>
                 setSelectedTagId(parseInt(event.target.value))
@@ -236,18 +239,14 @@ export const AdminAllPosts = () => {
                   <label className="label">Search:</label>
                   <label>
                     {"\t"}
-                    <input
-                      ref={searchBarInput}
-                      type="text"
-                      placeholder="Search By Title"
-                    />
+                    <input className="input is-rounded is-small" ref={searchBarInput} type="text" placeholder="Search By Title" />
                   </label>
-                  <button
+                  <button className="button is-successful is-rounded is-small"
                     onClick={() => {
                       setSearchTerm(searchBarInput.current.value);
                     }}
                   >
-                    enter
+                    🔍
                   </button>
                 </div>
               </div>
@@ -317,19 +316,18 @@ export const AdminAllPosts = () => {
                         </p>
                       </td>
                       <td>
-                        {post.tags &&
-                          post.tags.map((t, i) => (
-                            <span key={t.id}>
-                              {t.label} {i < post.tags.length - 1 ? "," : ""}
-                            </span>
-                          ))}
+                        {post.tags && post.tags.map((t, i) => (
+                          <span key={t.id}>{t.label}{i < post.tags.length - 1 ? ", " : ""}
+                          </span>
+                        ))}
                       </td>
                       <td>
-                        <div className="field">
+                        <div className="field mx-auto has-text-centered is-flex is-flex-direction-column">
                           <div className="control">
-                            <label className="checkbox">
+                            <label className="button has-background-light is-clickable is-rounded">
                               <input
                                 type="checkbox"
+                                className="mr-2"
                                 checked={Boolean(post.approved)}
                                 onChange={() =>
                                   togglePostApproval(post.id, post.approved)
