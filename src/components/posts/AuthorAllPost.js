@@ -122,11 +122,11 @@ export const AuthorAllPost = () => {
   return (
     <>
     <section className="box">
-    <div className="is-flex is-justify-content-space-evenly">
+    <div className="select has-text-centered is-flex is-justify-content-space-evenly dropdown is-active is-light is-right is-medium mb-6">
 
 
-      <label>
-       <label className="label">Filter By Category: {"\t"}</label> 
+      <label className="label">
+       <label className="label">📂 {"\t"}</label> 
         <select
           defaultValue="0"
           onChange={(event) =>
@@ -150,7 +150,7 @@ export const AuthorAllPost = () => {
 
 
 
-       <label className="label">Filter By Author: {"\t"}</label> 
+       <label className="label">✍️ {"\t"}</label> 
         <select
           defaultValue="0"
           onChange={(event) =>
@@ -167,7 +167,7 @@ export const AuthorAllPost = () => {
         </select>
       </label>
       <label>
-       <label className="label">Filter By Tag: {"\t"}</label> 
+       <label className="label">🔖 {"\t"}</label> 
         <select
           defaultValue="0"
           onChange={(event) => setSelectedTagId(parseInt(event.target.value))}
@@ -205,9 +205,9 @@ export const AuthorAllPost = () => {
           <label className="label">Search:</label>
       <label>
         {"\t"}
-        <input ref={searchBarInput} type="text" placeholder="Search By Title" />
+        <input className="input is-rounded is-small" ref={searchBarInput} type="text" placeholder="Search By Title" />
       </label>
-      <button
+      <button className="button is-successful is-rounded is-small"
         onClick={() => {
           setSearchTerm(searchBarInput.current.value);
         }}
