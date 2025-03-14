@@ -3,14 +3,16 @@ import { createTagInPost, getTags } from "../../services/tagServices";
 import { createNewPost } from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
 import { useNavigate } from "react-router-dom";
+import { getUserById } from "../../services/userServices";
 
 export const NewPost = ({token}) => {
     const title=useRef()
     const imageUrl=useRef()
-    const content=useRef()
+    const content=useRef()  
     const [selectedCategory, setSelectedCategory] = useState({})
     const [selectedTags, setSelectedTags] = useState([])
     const [categories, setCategories]=useState([])
+    const [userDetails, setUserDetails] = useState()
     const [tags, setTags]=useState([])
     const navigate=useNavigate()
 
@@ -21,7 +23,11 @@ export const NewPost = ({token}) => {
         getTags().then((tagsArray)=>{
             setTags(tagsArray)
         });
+        getUserById(Number(token)).then(user => {
+                    setUserDetails(user)
+                })
     },[])
+    console.log(userDetails)
 
     const handleTagsChange = (e) => {
       const foundTag = selectedTags.find(selectedTag => {
@@ -52,10 +58,14 @@ export const NewPost = ({token}) => {
           publication_date: new Date(),
           image_url: imageUrl.current.value,
           content: content.current.value,
-          approved: 1
     }
+
+    if (userDetails.is_admin ===1){
+      createdPost.approved=1}
+    else{createdPost.approved=0}
+    
     console.log(createdPost)
-    const NewPost=await createNewPost(createdPost)
+    const NewPost= await createNewPost(createdPost)
     console.log(NewPost)
     if (selectedTags.length > 0 && NewPost.id){
       const tagsInPostArray = selectedTags.map((tag) =>({

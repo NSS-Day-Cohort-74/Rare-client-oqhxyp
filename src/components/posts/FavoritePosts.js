@@ -12,7 +12,7 @@ export const FavoritePosts = ({token}) => {
   
   useEffect(()=> {
     fetchSubscriptionPosts()
-  },[])
+  },[token])
 
   console.log(filteredPosts)
   
