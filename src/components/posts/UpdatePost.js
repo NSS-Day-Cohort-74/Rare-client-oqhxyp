@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPostById, updatePost } from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
-import { createTagInPost, getPostTags, getTags, updatePostTags } from "../../services/tagServices";
+import { createTagInPost, deletePostTags, getPostTags, getTags, updatePostTags } from "../../services/tagServices";
 
 export const UpdatePost = ({token}) => {
     const { postId } = useParams();
@@ -55,6 +55,7 @@ export const UpdatePost = ({token}) => {
 
     const handleSavePost = async (event) => {
         event.preventDefault();
+        await deletePostTags(postId)
        
         const updatedPost = {
             id: parseInt(postId),
@@ -94,12 +95,13 @@ export const UpdatePost = ({token}) => {
         
         if (foundTag) {
             newSelectedTags = selectedTags.filter(selectedTag => selectedTag.tag_id !== tagId);
+            console.log(newSelectedTags)
         } else {
             const newTag = { tag_id: tagId };
             newSelectedTags = [...selectedTags, newTag];
         }
-    
-       
+        
+        
         setSelectedTags(newSelectedTags);
         
         try {
