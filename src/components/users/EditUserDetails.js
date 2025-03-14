@@ -52,7 +52,7 @@ export const EditUserDetails = () => {
                                     onChange={handleRoleChange}
                                 />Author
                             </label>
-                            <label classname="radio">
+                            <label className="radio">
                                 <input 
                                     type="radio"
                                     name="role"
