@@ -4,6 +4,7 @@ import { getPostsWithTagsAttatched } from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
 import { getAllUsers } from "../../services/userServices";
 import { getAllTags } from "../../services/tagServices";
+import { HumanDate } from "../utils/HumanDate";
 
 export const AuthorAllPost = () => {
   const [allPosts, setAllPosts] = useState([]);
@@ -74,7 +75,7 @@ export const AuthorAllPost = () => {
   }, [selectedAuthorId]);
 
   useEffect(() => {
-    setFilteredPosts(allPosts.filter(p => p.approved == 1));
+    setFilteredPosts(allPosts.filter((p) => p.approved == 1));
   }, [allPosts]);
 
   // you can filter by category AND by author!!!
@@ -121,106 +122,89 @@ export const AuthorAllPost = () => {
 
   return (
     <>
-    <section className="box">
-    <div className="is-flex is-justify-content-space-evenly">
+      <section className="box">
+        <div className="is-flex is-justify-content-space-evenly">
+          <label>
+            <label className="label">Filter By Category: {"\t"}</label>
+            <select
+              defaultValue="0"
+              onChange={(event) =>
+                setSelectedCategoryId(parseInt(event.target.value))
+              }
+            >
+              <option value="0">All Categories</option>
 
-
-      <label>
-       <label className="label">Filter By Category: {"\t"}</label> 
-        <select
-          defaultValue="0"
-          onChange={(event) =>
-            setSelectedCategoryId(parseInt(event.target.value))
-          }
-        >
-          
-
-          <option value="0">All Categories</option>
-          
-
-          {allCategories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {" "}
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-
-
-
-       <label className="label">Filter By Author: {"\t"}</label> 
-        <select
-          defaultValue="0"
-          onChange={(event) =>
-            setSelectedAuthorId(parseInt(event.target.value))
-          }
-        >
-          <option value="0">All Authors</option>
-          {allAuthors.map((c) => (
-            <option key={c.id} value={c.id}>
-              {" "}
-              {c.first_name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-       <label className="label">Filter By Tag: {"\t"}</label> 
-        <select
-          defaultValue="0"
-          onChange={(event) => setSelectedTagId(parseInt(event.target.value))}
-        >
-          <option value="0">All Tags</option>
-          {allTags.map((t) => (
-            <option key={t.id} value={t.id}>
-              {" "}
-              {t.label}
-            </option>
-          ))}
-        </select>
-      </label>
-
-    </div>
-    </section>
-
-
-
-
-
-
-
-
-
-
+              {allCategories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {" "}
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <label className="label">Filter By Author: {"\t"}</label>
+            <select
+              defaultValue="0"
+              onChange={(event) =>
+                setSelectedAuthorId(parseInt(event.target.value))
+              }
+            >
+              <option value="0">All Authors</option>
+              {allAuthors.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {" "}
+                  {c.first_name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <label className="label">Filter By Tag: {"\t"}</label>
+            <select
+              defaultValue="0"
+              onChange={(event) =>
+                setSelectedTagId(parseInt(event.target.value))
+              }
+            >
+              <option value="0">All Tags</option>
+              {allTags.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {" "}
+                  {t.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </section>
 
       <section className="section">
         <div className="container">
-      <div  className="level-left">
-      
-    <div className="level-left">
-      <div className="level-item">
-        <div className="field">
-          <label className="label">Search:</label>
-      <label>
-        {"\t"}
-        <input ref={searchBarInput} type="text" placeholder="Search By Title" />
-      </label>
-      <button
-        onClick={() => {
-          setSearchTerm(searchBarInput.current.value);
-        }}
-      >
-        enter
-      </button>
-        </div>
-      </div>
-
-    </div>
-
-  
- </div>
+          <div className="level-left">
+            <div className="level-left">
+              <div className="level-item">
+                <div className="field">
+                  <label className="label">Search:</label>
+                  <label>
+                    {"\t"}
+                    <input
+                      ref={searchBarInput}
+                      type="text"
+                      placeholder="Search By Title"
+                    />
+                  </label>
+                  <button
+                    onClick={() => {
+                      setSearchTerm(searchBarInput.current.value);
+                    }}
+                  >
+                    enter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <h1 className="title has-text-centered mb-6">All Posts</h1>
 
           {!isLoading ? (
@@ -262,7 +246,13 @@ export const AuthorAllPost = () => {
                       </td>
                       <td>
                         <time dateTime={post.publication_date}>
-                          {new Date(post.publication_date).toLocaleDateString()}
+                          {
+                            <HumanDate
+                              date={new Date(
+                                post.publication_date
+                              ).toLocaleDateString()}
+                            />
+                          }
                         </time>
                       </td>
                       <td>
@@ -277,14 +267,15 @@ export const AuthorAllPost = () => {
                             : post.content}
                         </p>
                       </td>
-                    <td>
-
-                  { post.tags && post.tags.map((t, i) => (
-                    <span key={t.id}>  {t.label} {i < post.tags.length - 1 ? ",":""}</span>
-
-                  ))
-                }
-                </td>
+                      <td>
+                        {post.tags &&
+                          post.tags.map((t, i) => (
+                            <span key={t.id}>
+                              {" "}
+                              {t.label} {i < post.tags.length - 1 ? "," : ""}
+                            </span>
+                          ))}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

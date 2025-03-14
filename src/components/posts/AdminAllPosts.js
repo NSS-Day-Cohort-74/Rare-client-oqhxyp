@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getPostsWithTagsAttatched, updatePost } from "../../services/postServices";
+import {
+  getPostsWithTagsAttatched,
+  updatePost,
+} from "../../services/postServices";
 import { getCategories } from "../../services/categoriesService";
-import { activateUserById, getAllUsers, updateUserById } from "../../services/userServices";
+import {
+  activateUserById,
+  getAllUsers,
+  updateUserById,
+} from "../../services/userServices";
 import { getAllTags } from "../../services/tagServices";
+import { HumanDate } from "../utils/HumanDate";
 
 export const AdminAllPosts = () => {
   const [allPosts, setAllPosts] = useState([]);
@@ -47,41 +55,42 @@ export const AdminAllPosts = () => {
 
   const togglePostApproval = async (postId, currentStatus) => {
     try {
-      
-      const postToUpdate = allPosts.find(post => post.id === postId);
-      
+      const postToUpdate = allPosts.find((post) => post.id === postId);
+
       if (!postToUpdate) {
         console.error(`Post with ID ${postId} not found`);
         return;
       }
-      
+
       const updatedPostData = {
         ...postToUpdate,
-        approved: !currentStatus
+        approved: !currentStatus,
       };
-      
-      const updatedPosts = allPosts.map(post => {
+
+      const updatedPosts = allPosts.map((post) => {
         if (post.id === postId) {
           return updatedPostData;
         }
         return post;
       });
-      
+
       setAllPosts(updatedPosts);
-      
+
       await updatePost(postId, updatedPostData);
-      
-      console.log(`Post ${postId} approval status changed to ${!currentStatus}`);
+
+      console.log(
+        `Post ${postId} approval status changed to ${!currentStatus}`
+      );
     } catch (error) {
       console.error("Error updating post approval status:", error);
-      
-      const revertedPosts = allPosts.map(post => {
+
+      const revertedPosts = allPosts.map((post) => {
         if (post.id === postId) {
           return { ...post, approved: currentStatus };
         }
         return post;
       });
-      
+
       setAllPosts(revertedPosts);
     }
   };
@@ -165,7 +174,7 @@ export const AdminAllPosts = () => {
       <section className="box">
         <div className="is-flex is-justify-content-space-evenly">
           <label>
-            <label className="label">Filter By Category: {"\t"}</label> 
+            <label className="label">Filter By Category: {"\t"}</label>
             <select
               defaultValue="0"
               onChange={(event) =>
@@ -182,7 +191,7 @@ export const AdminAllPosts = () => {
             </select>
           </label>
           <label>
-            <label className="label">Filter By Author: {"\t"}</label> 
+            <label className="label">Filter By Author: {"\t"}</label>
             <select
               defaultValue="0"
               onChange={(event) =>
@@ -199,10 +208,12 @@ export const AdminAllPosts = () => {
             </select>
           </label>
           <label>
-            <label className="label">Filter By Tag: {"\t"}</label> 
+            <label className="label">Filter By Tag: {"\t"}</label>
             <select
               defaultValue="0"
-              onChange={(event) => setSelectedTagId(parseInt(event.target.value))}
+              onChange={(event) =>
+                setSelectedTagId(parseInt(event.target.value))
+              }
             >
               <option value="0">All Tags</option>
               {allTags.map((t) => (
@@ -225,7 +236,11 @@ export const AdminAllPosts = () => {
                   <label className="label">Search:</label>
                   <label>
                     {"\t"}
-                    <input ref={searchBarInput} type="text" placeholder="Search By Title" />
+                    <input
+                      ref={searchBarInput}
+                      type="text"
+                      placeholder="Search By Title"
+                    />
                   </label>
                   <button
                     onClick={() => {
@@ -280,7 +295,13 @@ export const AdminAllPosts = () => {
                       </td>
                       <td>
                         <time dateTime={post.publication_date}>
-                          {new Date(post.publication_date).toLocaleDateString()}
+                          {
+                            <HumanDate
+                              date={new Date(
+                                post.publication_date
+                              ).toLocaleDateString()}
+                            />
+                          }
                         </time>
                       </td>
                       <td>
@@ -296,11 +317,12 @@ export const AdminAllPosts = () => {
                         </p>
                       </td>
                       <td>
-                        {post.tags && post.tags.map((t, i) => (
-                          <span key={t.id}>
-                            {t.label} {i < post.tags.length - 1 ? "," : ""}
-                          </span>
-                        ))}
+                        {post.tags &&
+                          post.tags.map((t, i) => (
+                            <span key={t.id}>
+                              {t.label} {i < post.tags.length - 1 ? "," : ""}
+                            </span>
+                          ))}
                       </td>
                       <td>
                         <div className="field">
@@ -309,9 +331,11 @@ export const AdminAllPosts = () => {
                               <input
                                 type="checkbox"
                                 checked={Boolean(post.approved)}
-                                onChange={() => togglePostApproval(post.id, post.approved)}
-                              />
-                              {" "}Active
+                                onChange={() =>
+                                  togglePostApproval(post.id, post.approved)
+                                }
+                              />{" "}
+                              Active
                             </label>
                           </div>
                         </div>
