@@ -6,14 +6,18 @@ export const AllTags = () => {
   const [allTags, setAllTags] = useState([]);
   const [refreshedTags, setRefreshedTags] = useState(false);
 
-  // const fillAllTags = () => {
-  //   pass
-  // }
-
-  useEffect(() => {
+  const data = () => {
     getAllTags().then((data) => setAllTags(data));
     console.log(allTags);
-  }, [refreshedTags, allTags.length]);
+  }
+
+  useEffect(() => {
+    data()
+  }, []);
+
+  useEffect(() => {
+    data()
+  },[refreshedTags])
 
   return (
     <div className="container">
@@ -25,6 +29,7 @@ export const AllTags = () => {
           <CreateTag
             setRefreshedTags={setRefreshedTags}
             refreshedTags={refreshedTags}
+            resetState={data}
           />
         </div>
       </div>

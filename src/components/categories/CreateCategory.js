@@ -2,22 +2,19 @@ import { useRef } from "react"
 import { postCategory } from "../../services/categoriesService"
 
 
-export const CreateCategory = ({setRefreshedCats, refreshedCats}) => {
+export const CreateCategory = ({setRefreshedCats, refreshedCats, resetPageState}) => {
     const catInput = useRef()
 
-    const handleCreateCat = (event) => {
+    const handleCreateCat = async (event) => {
         event.preventDefault()
         const cat = {
             label: catInput.current.value
         }
-        postCategory(cat)
-        if(refreshedCats) {
-
-            setRefreshedCats(false)
-        } else {
-            setRefreshedCats(true)
-            
-        }
+        await postCategory(cat)
+        setRefreshedCats(true)
+        catInput.current.value = ""
+        resetPageState()
+      
 
     }
     return(
