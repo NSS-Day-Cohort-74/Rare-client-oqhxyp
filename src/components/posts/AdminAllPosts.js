@@ -78,9 +78,7 @@ export const AdminAllPosts = () => {
 
       await updatePost(postId, updatedPostData);
 
-      console.log(
-        `Post ${postId} approval status changed to ${!currentStatus}`
-      );
+      
     } catch (error) {
       console.error("Error updating post approval status:", error);
 
